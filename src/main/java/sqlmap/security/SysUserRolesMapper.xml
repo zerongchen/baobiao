@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aotain.baobiao.mapper.secmodel.SysUserRolesMapper">
+  <resultMap id="BaseResultMap" type="com.aotain.baobiao.model.secmodel.SysUserRoles">
+    <id column="id" jdbcType="DECIMAL" property="id" />
+    <result column="roles_id" jdbcType="DECIMAL" property="rolesId" />
+    <result column="sys_user_id" jdbcType="DECIMAL" property="sysUserId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, roles_id, sys_user_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_roles
+    where id = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_user_roles
+    where id = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.aotain.baobiao.model.secmodel.SysUserRoles">
+    insert into sys_user_roles (id, roles_id, sys_user_id
+      )
+    values (#{id,jdbcType=DECIMAL}, #{rolesId,jdbcType=DECIMAL}, #{sysUserId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aotain.baobiao.model.secmodel.SysUserRoles">
+    insert into sys_user_roles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="rolesId != null">
+        roles_id,
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="rolesId != null">
+        #{rolesId,jdbcType=DECIMAL},
+      </if>
+      <if test="sysUserId != null">
+        #{sysUserId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aotain.baobiao.model.secmodel.SysUserRoles">
+    update sys_user_roles
+    <set>
+      <if test="rolesId != null">
+        roles_id = #{rolesId,jdbcType=DECIMAL},
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id = #{sysUserId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aotain.baobiao.model.secmodel.SysUserRoles">
+    update sys_user_roles
+    set roles_id = #{rolesId,jdbcType=DECIMAL},
+      sys_user_id = #{sysUserId,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

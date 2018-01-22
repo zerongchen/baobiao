@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<configuration>  
+    <property name="LOG_HOME"  value="/home/at_dev/baobiao/logs"></property>  
+      
+    <property name="consoleLayoutPattern"    
+        value="%-20(%d{yyyyMMdd_HH:mm:ss.SSS} [%level] [%logger] [%thread] [%-4relative]) %msg%n" />  
+      
+    <property name="fileLayoutPattern"    
+        value="%-20(%d{yyyyMMdd_HH:mm:ss.SSS} [%level] [%logger{10}][%thread] [%-4relative]) %msg%n" />  
+  
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>${consoleLayoutPattern}</pattern>  
+        </layout>  
+    </appender>  
+  
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>${LOG_HOME}/baobiao_info.log</file>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <fileNamePattern>${LOG_HOME}/baobiao_info.log.%d{yyyy-MM-dd}</fileNamePattern>  
+            <maxHistory>10</maxHistory>  
+        </rollingPolicy>  
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <Pattern>${fileLayoutPattern}</Pattern>  
+        </layout>  
+    </appender>  
+  
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <file>${LOG_HOME}/baobiao_error.log</file>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <fileNamePattern>${LOG_HOME}/baobiao_error.log.%d{yyyy-MM-dd}</fileNamePattern>  
+            <maxHistory>10</maxHistory>  
+        </rollingPolicy>  
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <Pattern>${fileLayoutPattern}</Pattern>  
+        </layout>  
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>error</level>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>  
+    </appender>  
+  
+    <!-- 定义本地环境日志级别 -->  
+    <springProfile name="dev">  
+        <logger name="com.aotain.baobiao" level="INFO"/><!-- 定义将com.aotain.baobiao包下的最低级别日志信息 -->  
+        <root>  
+            <level value="INFO" /> <!-- 系统全局日志输出最低级别，但不包括com.aotain.baobiao包 -->  
+            <appender-ref ref="STDOUT" /> 
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="ERROR_FILE" />  
+        </root>  
+    </springProfile>  
+  
+    <!-- 定义测试环境日志级别 -->  
+    <springProfile name="test">  
+        <logger name="com.aotain.baobiao" level="DEBUG"/>  
+        <root>  
+            <level value="INFO" />
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="ERROR_FILE" />   
+        </root>  
+    </springProfile>  
+      
+    <!--  定义线上环境日志级别  -->   
+    <springProfile name="pro">  
+        <root>  
+            <level value="INFO" />  
+            <appender-ref ref="INFO_FILE" />  
+            <appender-ref ref="ERROR_FILE" />  
+        </root>  
+    </springProfile>  
+  
+</configuration> 
