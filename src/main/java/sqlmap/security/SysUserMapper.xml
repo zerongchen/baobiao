@@ -5,6 +5,10 @@
     <id column="id" jdbcType="DECIMAL" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <collection property="roles" ofType="com.aotain.baobiao.model.secmodel.SysRole">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     id, username, password
@@ -70,6 +74,10 @@
   </update>
   
   <select id="findUserByName" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List" /> FROM sys_user WHEN username = #{name}
+    SELECT t.id, t.username, t.password, r.id, r.name  FROM sys_user t, sys_role r,sys_user_roles u
+    WHERE
+    t.id = u.sys_user_id AND r.id = u.roles_id
+    AND username = #{name}
+    
   </select>
 </mapper>

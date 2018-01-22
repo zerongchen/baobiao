@@ -42,9 +42,9 @@
   
     <!-- 定义本地环境日志级别 -->  
     <springProfile name="dev">  
-        <logger name="com.aotain.baobiao" level="INFO"/><!-- 定义将com.aotain.baobiao包下的最低级别日志信息 -->  
+        <logger name="com.aotain.baobiao" level="DEBUG"/><!-- 定义将com.aotain.baobiao包下的最低级别日志信息 -->
         <root>  
-            <level value="INFO" /> <!-- 系统全局日志输出最低级别，但不包括com.aotain.baobiao包 -->  
+            <level value="DEBUG" /> <!-- 系统全局日志输出最低级别，但不包括com.aotain.baobiao包 -->
             <appender-ref ref="STDOUT" /> 
             <appender-ref ref="INFO_FILE" />
             <appender-ref ref="ERROR_FILE" />  

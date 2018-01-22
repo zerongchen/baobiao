@@ -1,6 +1,6 @@
 package com.aotain.baobiao.service.test;
 
-import com.aotain.baobiao.mapper.test.UserMapper;
+import com.aotain.baobiao.mapper.test.SuserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TestServiceImpl implements TestService{
 
     @Autowired
-    private UserMapper userMapper;
+    private SuserMapper userMapper;
 
     /**
      *

@@ -6,4 +6,6 @@ public interface SuserMapper {
     int insert(Suser record);
 
     int insertSelective(Suser record);
+
+    String selectOne();
 }

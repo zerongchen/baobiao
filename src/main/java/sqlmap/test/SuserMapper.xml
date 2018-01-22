@@ -21,4 +21,8 @@
       </if>
     </trim>
   </insert>
+  
+  <select id="selectOne" resultType="java.lang.String">
+    SELECT susername FROM user  LIMIT 1
+  </select>
 </mapper>
