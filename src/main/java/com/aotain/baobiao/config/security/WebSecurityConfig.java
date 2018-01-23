@@ -16,8 +16,40 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//	private CusUserDetailsService cusUserDetailsService;
-
+	/**
+	 * <P>HttpSecurity 定义</P>
+	 * access(String) 如果给定的SPEL表达是为true，允许访问
+	 * anonymous() 允许匿名访问
+	 * authenticated() 允许认证过的用户访问
+	 * denyAll() 无条件拒绝访问
+	 * fullyAuthenticated() 如果用户是完整认证的话(不是通remember-me功能认证的)就允许访问
+	 * hasAnyAuthority(String ... ) 如果用户具备给定权限中的一个就允许访问
+	 * hasAnyRole(String...) 如果用户具备给定角色中的一个就允许访问
+	 * hasAuthority(String) 如果用户具备给定权限就允许访问
+	 * hasIpAddress(String) 如果请求来自给定IP就允许访问
+	 * hasRole(String) 如果用户具备给定角色就允许访问 ,会自动使用前缀 ROLE_
+	 * not() 对其他访问方法的结果求反
+	 * permitAll() 无条件允许访问
+	 * remember() 如果用户是通过remember-me 功能认证的,就允许访问
+	 *
+	 *
+	 * <p> Spring Security el 表达式</p>
+	 * authentication 认证对象
+	 * denyAll 结果始终为false
+	 * hasAnyRole(list of role) 结果用户被授予了列表中任意的指定角色，为true
+	 * hasRole(role) 结果用户被授予了列表指定角色，为true
+	 * hasIpAddress(ip address) 如果请求来自给定IP 结果为true
+	 * isAnonymous () 匿名用户true
+	 * isAuthenticated() 如果用户已经认证 true
+	 * isFullyAuthenticated() 如果用户是完整认证的话(不是通remember-me功能认证的) --true
+	 * isRemember() 如果用户是通过remember-me 功能认证的,true
+	 * permitAll 始终为true
+	 * principal 用户的principal 对象
+	 *
+	 * 使用规则:具体的放在前面，不具体(anyRequest())的放在后面,否则会被覆盖
+	 * @param http
+	 * @throws Exception
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -30,18 +62,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.usernameParameter("username").passwordParameter("password")
 //		  	.and().logout().permitAll();
 
-//		http.authorizeRequests().antMatchers("/admin/*").authenticated().and().formLogin().and().httpBasic().and()
-//				.authorizeRequests().antMatchers("/user/*").permitAll();
 
 		http.authorizeRequests()
-				.anyRequest().authenticated()
+				.and().authorizeRequests().antMatchers("/user/test").permitAll() //指定谁都可以访问的路径
+				.anyRequest().authenticated() //其余的都需要认证
 				.and().formLogin()
 //				.loginPage("/login")
 				//设置默认登录成功跳转页面
-				.defaultSuccessUrl("/user/test").failureUrl("/login?error").permitAll()
-
-				.and().authorizeRequests().antMatchers("/user/index").permitAll()
-//				.and().authorizeRequests().anyRequest()
+				.defaultSuccessUrl("/user/index").failureUrl("/login?error").permitAll()
 				.and()
 //				//开启cookie保存用户数据
 				.rememberMe()
@@ -68,6 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		内容权限验证
 //    	auth
 //    	.inMemoryAuthentication()
 //    	.withUser("tomy").password("123456").roles("ADMIN");
