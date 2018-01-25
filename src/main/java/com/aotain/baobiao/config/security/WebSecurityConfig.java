@@ -64,10 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 		http.authorizeRequests()
-				.and().authorizeRequests().antMatchers("/user/test").permitAll() //指定谁都可以访问的路径
+				.and().authorizeRequests().antMatchers("/user/test").permitAll()//指定谁都可以访问的路径
 				.anyRequest().authenticated() //其余的都需要认证
 				.and().formLogin()
-//				.loginPage("/login")
+				.loginPage("/login")
 				//设置默认登录成功跳转页面
 				.defaultSuccessUrl("/user/index").failureUrl("/login?error").permitAll()
 				.and()
@@ -84,7 +84,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				//设置注销成功后跳转页面，默认是跳转到登录页面
 				.logoutSuccessUrl("/login")
 //				.and().authorizeRequests()
-				.permitAll();
+				.permitAll()
+				.and().requiresChannel().antMatchers("/user/test").requiresSecure(); //指定https 安全通道
 	}
 
 	

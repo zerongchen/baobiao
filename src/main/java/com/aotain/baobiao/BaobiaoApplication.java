@@ -9,4 +9,5 @@ public class BaobiaoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BaobiaoApplication.class, args);
 	}
+
 }
