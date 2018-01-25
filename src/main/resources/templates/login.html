@@ -35,6 +35,7 @@
         <p th:if="${param.logout}" class="bg-warning">已注销</p>
         <p th:if="${param.error}" class="bg-danger">有错误，请重试</p>
         <h2>使用账号密码登录</h2>
+        <!--th:action="@{/login}" thymeleaf 模板会自动生成csrf token 的隐藏input 框-->
         <form class="form-signin" role="form" name="form" th:action="@{/login}" action="/login" method="post">
             <div class="form-group">
                 <label for="username">账号</label>
@@ -44,7 +45,7 @@
                 <label for="password">密码</label>
                 <input type="password" class="form-control" name="password" placeholder="密码"/>
             </div>
-            <tr><td><input type='checkbox' name='remember-me'/></td><td>Remember me on this computer.</td></tr>
+            <tr><td><input type='checkbox' name='remember-me'/></td><td>Remember me on this computer.</td></tr> <!--自动实现remember-me功能-->
             <input type="submit" id="login" value="Login" class="btn btn-primary"/>
         </form>
     </div>

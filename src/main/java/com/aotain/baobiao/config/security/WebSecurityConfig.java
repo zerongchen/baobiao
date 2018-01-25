@@ -46,6 +46,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * permitAll 始终为true
 	 * principal 用户的principal 对象
 	 *
+	 *
+	 * csrf 防护 服务端自动生成token ，
+	 *
 	 * 使用规则:具体的放在前面，不具体(anyRequest())的放在后面,否则会被覆盖
 	 * @param http
 	 * @throws Exception
@@ -65,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests()
 				.and().authorizeRequests().antMatchers("/user/test").permitAll()//指定谁都可以访问的路径
+				.and().authorizeRequests().antMatchers("/admin").access("isAuthenticated() and principal.username='admin'") //认证的，且用户名为admin才能访问该URL ，与前端的 authorize-url 对应才渲染效果
 				.anyRequest().authenticated() //其余的都需要认证
 				.and().formLogin()
 				.loginPage("/login")
@@ -85,7 +89,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login")
 //				.and().authorizeRequests()
 				.permitAll()
-				.and().requiresChannel().antMatchers("/user/test").requiresSecure(); //指定https 安全通道
+				.and().requiresChannel().antMatchers("/user/test").requiresSecure() //指定https 安全通道
+				.and().csrf().disable() //禁止CSRF防护
+				.httpBasic().realmName("csf") //起用http basic认证
+				;
+
 	}
 
 	

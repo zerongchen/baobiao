@@ -40,6 +40,11 @@
         <div sec:authorize="hasRole('ROLE_USER')">
             <p class="bg-info">无更多显示信息</p>
         </div>
+        <!--/admin 有权限访问该URL的才会显示出来-->
+        <span sec:authorize-url="/admin">
+            <br/> <a th:herf="/admin"></a>
+        </span>
+
         <form th:action="@{/custom-logout}" method="post">
             <input type="submit" class="btn btn-primary" value="注销"/>
         </form>

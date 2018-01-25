@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.TemplateResolver;
 
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
@@ -69,6 +72,18 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return connector;
     }
 
+    /**
+     * thymeleaf 方言
+     * @param templateResolver
+     * @return
+     */
+    @Bean
+    public SpringTemplateEngine templateEngine( TemplateResolver templateResolver){
+        SpringTemplateEngine springTemplateEngine =  new SpringTemplateEngine();
+        springTemplateEngine.setTemplateResolver(templateResolver);
+        springTemplateEngine.addDialect(new SpringSecurityDialect());
+        return springTemplateEngine;
+    }
 
 
 
