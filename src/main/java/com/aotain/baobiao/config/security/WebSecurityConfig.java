@@ -64,8 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //			.and().formLogin().loginPage("/dealLogin").permitAll()
 //			.usernameParameter("username").passwordParameter("password")
 //		  	.and().logout().permitAll();
-
-
 		http.authorizeRequests()
 				.and().authorizeRequests().antMatchers("/user/test").permitAll()//指定谁都可以访问的路径
 				.and().authorizeRequests().antMatchers("/admin").access("isAuthenticated() and principal.username='admin'") //认证的，且用户名为admin才能访问该URL ，与前端的 authorize-url 对应才渲染效果
